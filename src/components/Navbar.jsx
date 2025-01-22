@@ -4,7 +4,8 @@ const Navbar = () => {
     return (
         <div className="navbar bg-base-200">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+
+                <a className="btn btn-ghost text-xl"> <img className='size-10' src="https://cdn3.emoji.gg/emojis/44646-developer.png" alt="image" />devTinder</a>
             </div>
             <div className="flex-none gap-2">
                
