@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const Footer = () => {
+    const isFixed = useSelector((store)=> store.footer.isFixed);
+
+  //  const [isFixed, setIsFixed] = useState(false)
+
+    // if(feedSelector.length <=0 || connectionSelector.length <=0 || requestSelector.length <=0){
+    //     setIsFixed(true)
+    // }
+    // else setIsFixed(false)
+    // useEffect(() => {
+    //     // if(!feedSelector || !connectionSelector || !requestSelector) return
+    //     if (feedSelector?.length <= 0 || connectionSelector?.length <= 0 || requestSelector?.length <= 0) {
+    //         setIsFixed(true);
+    //     } else {
+    //         setIsFixed(false);
+    //     }
+    // }, [feedSelector, connectionSelector, requestSelector]); // Dependencies
+
+ 
     return (
-        <footer className="footer footer-center bg-base-200 text-base-content rounded p-2 fixed bottom-0">
+        <footer className={`footer footer-center bg-base-200 text-base-content rounded p-2 ${isFixed ? 'fixed ' : 'relative'}  bottom-0`}>
             <nav className="grid grid-flow-col gap-4">
                 <a className="link link-hover">About us</a>
                 <a className="link link-hover">Contact</a>

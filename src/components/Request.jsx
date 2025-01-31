@@ -3,12 +3,23 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { addRequest } from '../utils/requestSlice'
+import { addRequest, removeRequest } from '../utils/requestSlice'
 
 const Request = () => {
     const dispatch = useDispatch();
     const userConnection = useSelector((store) => store.request);
-    const reviewRequest = async () => {
+
+    const reviewRequest = async (status,id) =>{
+        try {
+            const res = await axios.post(BASE_URL+"/request/review/"+status+"/"+id,{},{withCredentials:true})
+            dispatch(removeRequest(id))
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+     
+    const fetchRequest = async () => {
         try {
             const reviewRequest = await axios.get(BASE_URL + "/user/requests/received", { withCredentials: true })
             dispatch(addRequest(reviewRequest.data))
@@ -21,7 +32,7 @@ const Request = () => {
 
 
     useEffect(() => {
-        reviewRequest();
+        fetchRequest();
     }, [])
 
     if (!userConnection) return null;
@@ -56,10 +67,10 @@ const Request = () => {
 
                                 {/* Action Button (Optional) */}
                                 <div className="flex-shrink-0">
-                                    <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors ">
+                                    <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors " onClick={()=>reviewRequest("accepted",connect._id) }>
                                     Accept
                                     </button>
-                                    <button className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors mx-3">
+                                    <button className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors mx-3" onClick={()=>reviewRequest("rejected",connect._id) }>
                                     Reject
                                     </button>
                                 </div>
