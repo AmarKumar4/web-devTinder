@@ -3,6 +3,9 @@ import React, { useEffect } from 'react';
 import { BASE_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addConnection } from '../utils/connections';
+import { fixedFooter } from '../utils/footerSlice';
+import FooterComponent from './FooterHandler';
+import FooterHandler from './FooterHandler';
 
 const Connection = () => {
     const dispatch = useDispatch();
@@ -20,7 +23,18 @@ const Connection = () => {
 
     useEffect(() => {
         connection();
-    }, []);
+       
+    }, [dispatch]);
+    
+    
+    // useEffect(() => {
+    //     // If feed is empty, set footer as fixed
+    //     if (userConnection?.length === 0) {
+    //         dispatch(fixedFooter(true));
+    //     } else {
+    //         dispatch(fixedFooter(false));
+    //     }
+    // }, [userConnection, dispatch]);
 
     if (!userConnection) return null;
     if (userConnection.length === 0) return <div className='font-bold text-white text-center my-10'>No connections found.</div>;
@@ -28,6 +42,8 @@ const Connection = () => {
     return (
         <div className="text-center my-10">
             <h1 className="font-bold text-white text-3xl mb-10">Connections</h1>
+             {/* FooterHandler to manage footer state */}
+            <FooterHandler data ={userConnection} />
             {userConnection && (
                 <div className="space-y-6">
                     {userConnection.map((connect) => {

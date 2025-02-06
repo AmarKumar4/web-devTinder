@@ -1,13 +1,16 @@
 
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRequest, removeRequest } from '../utils/requestSlice'
+import FooterHandler from './FooterHandler'
+import { fixedFooter } from '../utils/footerSlice'
 
 const Request = () => {
     const dispatch = useDispatch();
     const userConnection = useSelector((store) => store.request);
+    const [isFooterFixed, setIsFooterFixed] = useState(false);
 
     const reviewRequest = async (status,id) =>{
         try {
@@ -33,7 +36,23 @@ const Request = () => {
 
     useEffect(() => {
         fetchRequest();
-    }, [])
+    }, []);
+
+    
+     
+        // dispatch(fixedFooter(userConnection?.length===0))
+        // <FooterHandler data={userConnection}/> 
+        useEffect(() => {
+            if ( userConnection?.length === 0) {
+                console.log("true")
+                dispatch(fixedFooter(true));  // Fix footer if data is empty
+            } else {
+                dispatch(fixedFooter(false)); // Unfix footer if data is present
+                console.log("false "+ userConnection?.length);
+            }
+            console.log("footerHandler")
+        }, [userConnection, dispatch]);
+   
 
     if (!userConnection) return null;
     if (userConnection.length === 0) return <div className='font-bold text-white text-center my-10'>No connections found.</div>;
@@ -41,6 +60,8 @@ const Request = () => {
     return (
         <div className="text-center my-10">
             <h1 className="font-bold text-white text-3xl mb-10">Connections</h1>
+             {/* FooterHandler to manage footer state */}
+             {/* <FooterHandler data={userConnection}/> */}
             {userConnection && (
                 <div className="space-y-6">
                     {userConnection.map((connect) => {

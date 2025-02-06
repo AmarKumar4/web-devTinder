@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
 import { addUser } from '../utils/userSlice'
+import FooterHandler from './FooterHandler'
 
 const Body = () => {
     const userData = useSelector((store)=>store.user);
@@ -36,6 +37,7 @@ const Body = () => {
         <Navbar />
         <Outlet />
         <Footer />
+        <FooterHandler data={userData}/>
     </div>
   )
 }

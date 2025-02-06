@@ -5,6 +5,7 @@ import { addFeed} from '../utils/feedSlice'
 import UserCard from './UserCard'
 import { BASE_URL } from '../utils/constants'
 import { fixedFooter } from '../utils/footerSlice'
+import FooterHandler from './FooterHandler'
 
 const Feed = () => {
     const [userFeedData, setUserFeedData] = useState([]);
@@ -27,16 +28,16 @@ const Feed = () => {
     useEffect(() => {
         handleFeed()
     }, [])
-    useEffect(() => {
-        // If feed is empty, set footer as fixed
-        if (profileFeed?.length === 0) {
-            dispatch(fixedFooter(true));
-        } else {
-            dispatch(fixedFooter(false));
-        }
-    }, [profileFeed, dispatch]);
-    if(!profileFeed) return;
-    if(profileFeed.length <=0) return  <h1 className='flex justify-center my-10'>Now new users founds!</h1>
+    // useEffect(() => {
+    //     // If feed is empty, set footer as fixed
+    //     if (profileFeed?.length === 0) {
+    //         dispatch(fixedFooter(true));
+    //     } else {
+    //         dispatch(fixedFooter(false));
+    //     }
+    // }, [profileFeed, dispatch]);
+    if(!profileFeed) return <><FooterHandler data={profileFeed} /></>;
+    if(profileFeed.length <=0) return  <h1 className='flex justify-center my-10'>Now new users founds! <FooterHandler data={profileFeed} /></h1>
     return (
         <>
             {profileFeed && (
@@ -44,7 +45,7 @@ const Feed = () => {
                     <UserCard key={1} userProfile={profileFeed[0]} />
                 </div>
             )}
-
+            
             {/* Footer ke liye extra padding */}
             {/* <div className="h-2/5"></div> Adjust height according to your footer's height */}
         </>

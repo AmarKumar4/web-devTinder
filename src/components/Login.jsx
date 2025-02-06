@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { BASE_URL } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
+import { fixedFooter } from '../utils/footerSlice';
 
 const Login = () => {
     const [emailId, setEmailId] = useState("elon@gmail.com");
@@ -14,6 +15,7 @@ const Login = () => {
     const [errorMessage,setErrorMessage] = useState("");
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    // const userSelector =useSelector((store)=>store.user);
     const handleLogin = async ()=>{
         if(!isLoginForm){
         try{
@@ -41,6 +43,16 @@ const Login = () => {
             }
     }
     }
+    // useEffect(() => {
+    //     if ( userSelector?.length === 0) {
+    //         console.log("true")
+    //         dispatch(fixedFooter(true));  // Fix footer if data is empty
+    //     } else {
+    //         dispatch(fixedFooter(false)); // Unfix footer if data is present
+    //         console.log("false "+ userSelector?.length);
+    //     }
+    //     console.log("footerHandler")
+    // }, [userSelector, dispatch]);
     return (
         <div className='flex justify-center my-4  '>
             <div className="card bg-base-300 w-96 shadow-xl">

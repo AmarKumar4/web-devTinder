@@ -1,23 +1,27 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../utils/constants';
 import { removeUser } from '../utils/userSlice';
+import { fixedFooter } from '../utils/footerSlice';
 
 const Navbar = () => {
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate()
+  const navigator= useSelector(store => store.footer)
   const handleLogout = async ()=>{
     try {
         axios.get(BASE_URL+"/logout",{withCredentials:true});
         dispatch(removeUser());
+        // dispatch(fixedFooter(true))
+        console.log("logout - " + navigator.isFixed)
         navigate("/login")
     } catch (error) {
         //through the Error page 
     }
-
+   
   }
     return (
         <div className="navbar bg-base-200">

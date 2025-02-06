@@ -78,7 +78,7 @@ const EditProfile = ({ loggedUser }) => {
             setErrorMessage(err.response.data)
         }
     }
- 
+   
 
     return (
         <>
